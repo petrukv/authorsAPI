@@ -34,11 +34,11 @@ class CustomUserManager(BaseUserManager):
         kwargs.setdefault("is_superuser", True)
         kwargs.setdefault("is_active", True)
 
-        if kwargs.get('is_stuff') is not True:
-            raise ValueError("Super user mut have is_stuff=True")
+        if kwargs.get('is_staff') is not True:
+            raise ValueError("Super user mut have is_staff=True")
         
         if kwargs.get('is_superuser') is not True:
-            raise ValueError("Super user mut have is_superuser=True")
+            raise ValueError("Super user must have is_superuser=True")
         
         if not password:
             raise ValueError(_('Superuser must have password'))
