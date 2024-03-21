@@ -17,12 +17,12 @@ class Profile(TimeStampedModel):
         OTHER = 'O', _('Other')
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    phone_number = models.PhoneNumberField(verbose_name=_('phone number'), max_length=30, default='+380942134561')
+    phone_number = PhoneNumberField(verbose_name=_('phone number'), max_length=30, default='+380942134561')
     about_me = models.TextField(verbose_name=_('about_me'), default='say something about yourself')
     gender = models.CharField(max_length=50, verbose_name=_('gender'), choices=Gender.choices, default=Gender.OTHER)
     country = CountryField(verbose_name=_('country'), default='UA', blank=False, null=False)
     city = models.CharField(verbose_name=_('city'), max_length=200, default='Kyiv', blank=False, null=False)
-    profile_img = models.models.ImageField(verbose_name=_('profile photo'), default='/profile_default.png')
+    profile_img = models.ImageField(verbose_name=_('profile photo'), default='/profile_default.png')
     twitter_handle = models.CharField(max_length=50, verbose_name=_('twitter handle'), blank=True)
     followers = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True)
 
