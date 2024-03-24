@@ -12,7 +12,7 @@ from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
 
 
-User = get_user_model
+User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     gender = serializers.CharField(source='profile.gender')
@@ -26,7 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'first_name', 'last_name', 'gender', 'phone_number', 'profile_photo', 'country', 'city']
 
     def to_representation(self, instance):
-        representation = super(UserSerializer, self).to_representation
+        representation = super(UserSerializer, self).to_representation(instance)
         if instance.is_superuser:
             representation['admin'] = True
         return representation
@@ -46,13 +46,13 @@ class CustomRegisterSerializer(RegisterSerializer):
             'email': self.validated_data.get('email', ''),
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
-            'password1': self.validated_data('password1', '')
+            'password1': self.validated_data.get('password1', '')
         }
     
     def save(self, request):
         adapter = get_adapter()
         user = adapter.new_user(request)
-        self.cleaned_data = self.get_cleaned_data
+        self.cleaned_data = self.get_cleaned_data()
         user = adapter.save_user(request, user, self)
         user.save()
 
