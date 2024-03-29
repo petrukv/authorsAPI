@@ -8,12 +8,12 @@ class ProfileSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(source='user.last_name')
     email = serializers.EmailField(source='user.email')
     full_name = serializers.SerializerMethodField(read_only=True)
-    profile_photo = serializers.SerializerMethodField()
+    profile_img = serializers.SerializerMethodField()
     country = CountryField(name_only=True)
 
     class Meta:
         model = Profile
-        fields = ['id', 'first_name', 'last_name', 'full_name', 'email', 'profile_photo',
+        fields = ['id', 'first_name', 'last_name', 'full_name', 'email', 'profile_img',
                 'phone_number', 'gender', 'country', 'city', 'twitter_handle', 'about_me']
 
 
@@ -23,7 +23,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         return f"{first_name} {last_name}"
     
     def get_profile_photo(self, obj):
-        return obj.profile_photo.url
+        return obj.profile_img.url
     
 
 class UpdateProfileSerializer(serializers.ModelSerializer):
@@ -31,7 +31,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['phone_number', 'profile_photo', 'about_me', 'gender', 'country', 'city', 'twitter_handle',]
+        fields = ['phone_number', 'profile_img', 'about_me', 'gender', 'country', 'city', 'twitter_handle',]
 
 
 class FollowingSerializer(serializers.ModelSerializer):
@@ -40,4 +40,4 @@ class FollowingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name', 'profile_photo', 'about_me', 'twitter_handle']
+        fields = ['first_name', 'last_name', 'profile_img', 'about_me', 'twitter_handle']

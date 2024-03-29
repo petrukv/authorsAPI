@@ -23,7 +23,7 @@ class ProfileListAPIView(generics.ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     pagination_class = ProfilePagination
-    renderer_classes = [ProfileJSONRenderer]
+    renderer_classes = [ProfilesJSONRenderer]
 
 class ProfileDetailAPIView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
@@ -95,29 +95,31 @@ class FollowAPIView(APIView):
             follower = Profile.objects.get(user=self.request.user)
             user_profile = request.user.profile
             profile = Profile.objects.get(user__id=user_id)
-            
+
             if profile == follower:
-                raise CantFollowYourself
-            
+                raise CantFollowYourself()
+
             if user_profile.check_following(profile):
                 formatted_response = {
-                'status_code': status.HTTP_400_BAD_REQUEST,
-                'message': f'You are already following {profile.user.first_name} {profile.user.last_name}'
+                    "status_code": status.HTTP_400_BAD_REQUEST,
+                    "message": f"You are already following {profile.user.first_name} {profile.user.last_name}",
                 }
                 return Response(formatted_response, status=status.HTTP_400_BAD_REQUEST)
-            
+
             user_profile.follow(profile)
-            subject = 'A new user follows you'
-            message = f'user {user_profile.user.first_name} {user_profile.user.last_name} now follows you!'
+            subject = "A new user follows you"
+            message = f"Hi there, {profile.user.first_name}!!, the user {user_profile.user.first_name} {user_profile.user.last_name} now follows you"
             from_email = DEFAULT_FROM_EMAIL
             recipient_list = [profile.user.email]
             send_mail(subject, message, from_email, recipient_list, fail_silently=True)
-            return Response({
-                'status_code': status.HTTP_200_OK,
-                'message': f'You are now following {profile.user.first_name} {profile.user.last_name}'
-            })
+            return Response(
+                {
+                    "status_code": status.HTTP_200_OK,
+                    "message": f"You are now following {profile.user.first_name} {profile.user.last_name}",
+                },
+            )
         except Profile.DoesNotExist:
-            raise NotFound("You can't follow this profile")
+            raise NotFound("You can't follow a profile that does not exist.")
         
 class UnFollowAPIView(APIView):
     def post(self, request, user_id, format=None):
