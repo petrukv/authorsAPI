@@ -23,7 +23,7 @@ class ArticleJSONRenderer(JSONRenderer):
         return json.dumps({'status_code':status_code, 'article':data})
     
 
-class ArticleJSONRenderer(JSONRenderer):
+class ArticlesJSONRenderer(JSONRenderer):
     charset = 'utf-8'
 
     def render(self, data, accepted_media_type=None, renderer_context=None):

@@ -27,3 +27,5 @@ class ArticleReadTimeEngine:
         reading_time = ceil(reading_time)
         
         return reading_time
+    
+    

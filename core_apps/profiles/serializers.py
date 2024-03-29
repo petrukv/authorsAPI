@@ -22,7 +22,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         last_name = obj.user.last_name.title()
         return f"{first_name} {last_name}"
     
-    def get_profile_photo(self, obj):
+    def get_profile_img(self, obj):
         return obj.profile_img.url
     
 

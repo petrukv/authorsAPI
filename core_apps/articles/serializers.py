@@ -6,7 +6,7 @@ from core_apps.profiles.serializers import ProfileSerializer
 
 class TagListField(serializers.Field):
     def to_representation(self, value):
-        return [tag.name for tag in value.all]
+        return [tag.name for tag in value.all()]
     
     def to_internal_value(self, data):
         if not isinstance(data, list):
@@ -59,7 +59,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         instance.description = validated_data.get('description', instance.description)
         instance.body = validated_data.get('body', instance.body)
         instance.banner_image = validated_data.get('banner_image', instance.banner_image)
-        instance.updated_at = validated_data.get('updated_at', instance.updated)
+        instance.updated_at = validated_data.get('updated_at', instance.updated_at)
 
         if 'tags' in validated_data:
             instance.tags.set(validated_data['tags'])
@@ -70,4 +70,4 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = ['id', 'title', 'slug', 'tags', 'estimated_reading_time', 'author_info',
-                'views', 'description', 'body', 'banner_image', 'created_at', 'updated_at']
+                    'views', 'description', 'body', 'banner_image', 'created_at', 'updated_at']
