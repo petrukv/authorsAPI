@@ -44,10 +44,10 @@ class ArticleView(TimeStampedModel):
         verbose_name_plural = ('Article Views')
         unique_together = ('article', 'user', 'viewer_ip')
 
-        def __str__(self):
-            return f'{self.article.title} viewed by {self.user.first_name if self.user else "Anonymous"} from IP {self.viewer_ip}'
+    def __str__(self):
+        return f'{self.article.title} viewed by {self.user.first_name if self.user else "Anonymous"} from IP {self.viewer_ip}'
         
-        @classmethod
-        def record_view(cls, article, user, viewer_ip):
-            view, _ = cls.objects.get_or_create(article=article, user=user, viewer_ip=viewer_ip)
-            view.save()
+    @classmethod
+    def record_view(cls, article, user, viewer_ip):
+        view, _ = cls.objects.get_or_create(article=article, user=user, viewer_ip=viewer_ip)
+        view.save()
