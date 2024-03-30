@@ -12,18 +12,18 @@ class ResponseListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = ResponseSerializer
 
-    def get(self, request, *args, **kwargs):
-        article_id = self.kwargs.get('article_id')
+    def get_queryset(self):
+        article_id = self.kwargs.get("article_id")
         return Response.objects.filter(article__id=article_id, parent_response=None)
-    
+
     def perform_create(self, serializer):
         user = self.request.user
-        article_id = self.kwargs.get('article_id')
+        article_id = self.kwargs.get("article_id")
         article = get_object_or_404(Article, id=article_id)
         serializer.save(user=user, article=article)
 
 class ResponseUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Response.object.all()
+    queryset = Response.objects.all()
     serializer_class = ResponseSerializer
     lookup_field = 'id'
 
