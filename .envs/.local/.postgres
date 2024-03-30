@@ -3,3 +3,4 @@ POSTGRES_PORT=5432
 POSTGRES_DB=authors-live
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=password
+DATABASES_URL=postgres://postgres:password@postgres:5432/authors-live
