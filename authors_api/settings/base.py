@@ -217,9 +217,9 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 
 ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': "es:9200",
-    }
+    "default": {
+        "hosts": "es:9200",
+    },
 }
 
 LOGGING = {
